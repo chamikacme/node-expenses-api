@@ -4,7 +4,7 @@ import {
   generateToken,
   hashPassword,
 } from "../security/service";
-import { HttpError } from "routing-controllers";
+import CustomError from "../utils/CustomError";
 
 export const register = async (
   fullName: string,
@@ -30,7 +30,7 @@ export const register = async (
       token,
     };
   } else {
-    throw new HttpError(400, "User already exists");
+    throw new CustomError("User already exists", 400);
   }
 };
 
@@ -38,13 +38,13 @@ export const login = async (email: string, password: string) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new HttpError(401, "Invalid credentials");
+    throw new CustomError("User not found", 404);
   }
 
   const isAuthenticated = await comparePassword(password, user.password);
 
   if (!isAuthenticated) {
-    throw new HttpError(401, "Invalid credentials");
+    throw new CustomError("Invalid password", 400);
   }
 
   const token = await generateToken(user.id);

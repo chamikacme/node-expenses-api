@@ -1,5 +1,5 @@
 import Category from "./models/Category";
-import { HttpError } from "routing-controllers";
+import CustomError from "../utils/CustomError";
 
 export const createCategory = async (name: string, userId: string) => {
   const category = await Category.create({ name, userId });
@@ -17,7 +17,7 @@ export const getCategory = async (id: string, userId: string) => {
   const category = await Category.findOne({ _id: id, userId });
 
   if (!category) {
-    throw new HttpError(404, "Category not found");
+    throw new CustomError("Category not found", 404);
   }
 
   return category;
@@ -35,7 +35,7 @@ export const updateCategory = async (
   );
 
   if (!category) {
-    throw new HttpError(404, "Category not found");
+    throw new CustomError("Category not found", 404);
   }
 
   return category;
@@ -45,7 +45,7 @@ export const deleteCategory = async (id: string, userId: string) => {
   const category = await Category.findOneAndDelete({ _id: id, userId });
 
   if (!category) {
-    throw new HttpError(404, "Category not found");
+    throw new CustomError("Category not found", 404);
   }
 
   return category;

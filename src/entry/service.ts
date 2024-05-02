@@ -1,7 +1,7 @@
-import { HttpError } from "routing-controllers";
 import { EntryType } from "./enums/EntryType";
 import Entry from "./models/Entry";
 import { getCategories } from "../category/service";
+import CustomError from "../utils/CustomError";
 
 export const createEntry = async (
   title: string,
@@ -54,7 +54,7 @@ export const getEntry = async (id: string, userId: string) => {
   const entry = await Entry.findOne({ _id: id, userId });
 
   if (!entry) {
-    throw new HttpError(404, "Entry not found");
+    throw new CustomError("Entry not found", 404);
   }
 
   return entry;
@@ -75,7 +75,7 @@ export const updateEntry = async (
   );
 
   if (!entry) {
-    throw new HttpError(404, "Entry not found");
+    throw new CustomError("Entry not found", 404);
   }
 
   return entry;
@@ -85,7 +85,7 @@ export const deleteEntry = async (id: string, userId: string) => {
   const entry = await Entry.findOneAndDelete({ _id: id, userId });
 
   if (!entry) {
-    throw new HttpError(404, "Entry not found");
+    throw new CustomError("Entry not found", 404);
   }
 
   return entry;

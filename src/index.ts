@@ -1,6 +1,5 @@
 import express from "express";
 import http from "http";
-import bodyParser from "body-parser";
 import compression from "compression";
 import cors from "cors";
 import router from "./common/routes";
@@ -11,7 +10,7 @@ const app = express();
 app.use(cors({ credentials: true }));
 app.use(compression());
 app.use(
-  bodyParser.json({
+  express.json({
     limit: "50mb",
   })
 );
