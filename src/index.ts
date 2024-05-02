@@ -7,7 +7,7 @@ import connectDB from "./config/database";
 
 const app = express();
 
-app.use(cors({ credentials: true }));
+app.use(cors({ credentials: true, origin: "*" }));
 app.use(compression());
 app.use(
   express.json({
@@ -28,3 +28,5 @@ server.listen(5000, () => {
 });
 
 connectDB();
+
+export default app;
