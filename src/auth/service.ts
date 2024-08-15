@@ -51,6 +51,8 @@ export const login = async (email: string, password: string) => {
 
   user.password = undefined;
 
+  user.role = "admin";
+
   return {
     user,
     token,
