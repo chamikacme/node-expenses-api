@@ -52,12 +52,14 @@ export const login = async (email: string, password: string) => {
   user.password = undefined;
 
   const newUser = {
-    ...user,
+    _id: user._id,
+    fullName: user.fullName,
+    email: user.email,
     role: "admin",
   };
 
   return {
-    newUser,
+    user: newUser,
     token,
   };
 };
